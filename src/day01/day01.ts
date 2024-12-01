@@ -29,7 +29,6 @@ let partTwo = 0;
 left.forEach((leftNumber) => {
   let count = score.get(leftNumber) ?? -1;
   if (count === -1) {
-    count = 0;
     count = right.reduce((acc, rightNumber) => {
       if (leftNumber === rightNumber) {
         return acc + 1;
