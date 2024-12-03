@@ -9,33 +9,33 @@ const text = await input.text();
 
 const validResultsOne = text.match(/(mul\(\d+,\d+\))/g);
 
-const partOne =
-  validResultsOne?.reduce((acc, curr) => {
-    const start = curr.indexOf("(") + 1;
-    const end = curr.indexOf(")");
-    const digits = curr.slice(start, end).split(",").map(Number);
-    return digits[0] * digits[1] + acc;
-  }, 0) ?? 0;
+function getMultiple(input: string) {
+  const digits = input
+    .slice(4, input.length - 1)
+    .split(",")
+    .map(Number);
+  return digits[0] * digits[1];
+}
+
+const partOne = validResultsOne?.reduce((acc, curr) => getMultiple(curr) + acc, 0) ?? 0;
 
 console.log({ partOne });
 
 const validResultsTwo = text.match(/(mul\(\d+,\d+\))|(do\(\))|don't\(\)/g);
-let isEnable = true;
+let isEnabled = true;
 const partTwo =
   validResultsTwo?.reduce((acc, curr) => {
     if (curr === "do()") {
-      isEnable = true;
+      isEnabled = true;
       return acc;
     }
     if (curr === "don't()") {
-      isEnable = false;
+      isEnabled = false;
       return acc;
     }
-    if (!isEnable) return acc;
-    const start = curr.indexOf("(") + 1;
-    const end = curr.indexOf(")");
-    const digits = curr.slice(start, end).split(",").map(Number);
-    return digits[0] * digits[1] + acc;
+    if (!isEnabled) return acc;
+
+    return getMultiple(curr) + acc;
   }, 0) ?? 0;
 
 console.log({ partTwo });
