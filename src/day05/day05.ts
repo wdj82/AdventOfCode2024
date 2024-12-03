@@ -1,5 +1,5 @@
-// Advent of Code day 4
-// https://adventofcode.com/2024/day/4
+// Advent of Code day 5
+// https://adventofcode.com/2024/day/5
 
 import { rawInput } from "./rawInput";
 
