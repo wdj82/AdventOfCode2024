@@ -11,15 +11,14 @@ const map = new Map<string, number>();
 
 // recursively work through each stone - memoizing as we go
 function blink(stone: string, blinks: number) {
+  // no more blinks return this single stone
+  if (blinks === 0) {
+    return 1;
+  }
+
   const key = `${stone}+${blinks}`;
   if (map.has(key)) {
     return map.get(key) ?? 1;
-  }
-
-  // no more blinks return this single stone
-  if (blinks === 0) {
-    map.set(key, 1);
-    return 1;
   }
 
   blinks -= 1;
