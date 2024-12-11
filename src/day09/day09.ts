@@ -108,7 +108,7 @@ function moveFiles() {
 
   const partTwo = calculateChecksum(copy);
   console.log({ partTwo });
-  document.getElementById("partOne")?.appendChild(document.createTextNode(partTwo.toString()));
+  document.getElementById("partTwo")?.appendChild(document.createTextNode(partTwo.toString()));
 }
 
 moveFiles();
