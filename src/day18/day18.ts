@@ -8,17 +8,22 @@ import { rawInput } from "./rawInput";
 const positions = rawInput.split("\n").map((line) => line.split(",").map(Number));
 
 const gridSize = 71;
-const grid = new Array(gridSize).fill(".").map(() => new Array(gridSize).fill("."));
+// const grid = new Array(gridSize).fill(".").map(() => new Array(gridSize).fill("."));
 
 // set up grid
 const steps = 1024;
-for (let i = 0; i < steps; i++) {
-  const [y, x] = positions[i];
-  grid[x][y] = "#";
-}
+// for (let i = 0; i < steps; i++) {
+//   const [y, x] = positions[i];
+//   grid[x][y] = "#";
+// }
 
 // standard dijkstra's
-function findShortestPath() {
+function findShortestPath(steps: number) {
+  const grid = new Array(gridSize).fill(".").map(() => new Array(gridSize).fill("."));
+  for (let i = 0; i < steps; i++) {
+    const [y, x] = positions[i];
+    grid[x][y] = "#";
+  }
   const nodes = new PriorityQueue<{ x: number; y: number }>();
   nodes.enqueue({ x: 0, y: 0 }, 0);
   const visited = new Set();
@@ -47,21 +52,25 @@ function findShortestPath() {
   return false;
 }
 
-const partOne = findShortestPath();
+const partOne = findShortestPath(steps);
 console.log({ partOne });
 
 // keep adding obstacles until we can no longer reach end of the grid
+// binary search the positions
 function solvePartTwo() {
-  for (let i = steps; i < positions.length; i++) {
-    const [y, x] = positions[i];
-    grid[x][y] = "#";
-
-    const result = findShortestPath();
-    if (result === false) {
-      return `${y},${x}`;
+  let low = steps;
+  let high = positions.length;
+  while (high - low > 1) {
+    let i = Math.floor((low + high) / 2);
+    const result = findShortestPath(i);
+    if (result) {
+      low = i;
+    } else {
+      high = i;
     }
   }
-  throw new Error("did not find answer");
+  const [y, x] = positions[low];
+  return `${y},${x}`;
 }
 
 const partTwo = solvePartTwo();
