@@ -24,7 +24,7 @@ const grid = rawInput.split("\n").map((line) => line.split(""));
 const height = grid.length;
 const width = grid[0].length;
 
-export const searchDirectionsCardinal: { dx: number; dy: number; direction: Directions }[] = [
+const searchDirectionsCardinal: { dx: number; dy: number; direction: Directions }[] = [
   { dx: 0, dy: -1, direction: "W" },
   { dx: 0, dy: 1, direction: "E" },
   { dx: -1, dy: 0, direction: "N" },
@@ -39,7 +39,7 @@ const directionCosts: Record<Directions, Record<Directions, number>> = {
   E: { E: 1, N: 1001, W: -1, S: 1001 },
 };
 
-export function getAdjacentCells(currX: number, currY: number, direction: Directions) {
+function getAdjacentCells(currX: number, currY: number, direction: Directions) {
   const result = [];
 
   for (let i = 0; i < searchDirectionsCardinal.length; i++) {
